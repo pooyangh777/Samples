@@ -9,7 +9,7 @@ JAVA JDK8
 - [x] ServerRegister
 
 
-## ConnectToServer
+## Connect To Server
 
 ```swift
 public WebSocketClass(URI url) {
@@ -27,7 +27,7 @@ public void connect() {
 
 ```
 
-## ServerAnswer
+## Server Answer
 Switch Between Types That Server Answer.
 Each Case Call Special Method
 ```swift 
@@ -52,7 +52,7 @@ public void onMessage(String message) {
     }
 }
 ```
-## DeviceId & SendRequestForDeviceRegister
+## DeviceId & Send a Request For Device Register
 ```swift
 public void onPing() {
     RegisterDevice registerDevice = new RegisterDevice(false, "PodChat", deviceId);
@@ -62,7 +62,7 @@ public void onPing() {
 ```
 <br/>
 
-## ServerRegister
+## Server Register
 ```swift
 public void serverRegister(AsyncModelClass response) {
     String peerId = response.getContent();
@@ -72,7 +72,7 @@ public void serverRegister(AsyncModelClass response) {
     send(content);
 }
 ```
-## SendMessageToServer
+## Send Message To Server
 ```swift
 public void send(String s) {
     System.out.println(s);
