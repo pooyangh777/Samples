@@ -1,6 +1,6 @@
 package WebSocket;
 
-public class AsyncModelClass {
+public class AsyncMessage {
     long id;
     int senderMessageId;
     String senderName;
@@ -56,7 +56,7 @@ public class AsyncModelClass {
         this.content = content;
     }
 
-    public AsyncModelClass(int id, int senderMessageId, String senderName, int senderId, int type, String content) {
+    public AsyncMessage(int id, int senderMessageId, String senderName, int senderId, int type, String content) {
         this.id = id;
         this.senderMessageId = senderMessageId;
         this.senderName = senderName;
