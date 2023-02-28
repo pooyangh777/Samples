@@ -1,15 +1,20 @@
 package WebSocket;
 
+import WebSocket.Input.AsyncMessageResponse;
+import WebSocket.Input.ChatMessageResponse;
 import com.google.gson.Gson;
 
 import java.net.URI;
 
 public class Chat implements AsyncListener {
+    private final ChatListener listener;
     Async async;
     Gson gson = new Gson();
+    private String token;
 
-    public Chat() {
+    public Chat(ChatListener listener) {
         async = new Async(URI.create("wss://msg.pod.ir/ws"), this);
+        this.listener = listener;
     }
 
     @Override
@@ -21,8 +26,13 @@ public class Chat implements AsyncListener {
     }
 
     @Override
-    public void onMessage(String message) {
-        System.out.println("Chat SDK:\n" + message);
+    public void onMessage(AsyncMessageResponse message) {
+        //Message
+        ChatMessageResponse chatMessageResponse = gson.fromJson(message.getContent(), ChatMessageResponse.class);
+        if (chatMessageResponse.getType() == 23) {
+            // Chat READY
+            listener.onConnectionStateChanged(ChatState.Ready);
+        }
     }
 
     public void connect() {
@@ -42,9 +52,14 @@ public class Chat implements AsyncListener {
         AsyncMessageVO asyncMessageVO = new AsyncMessageVO();
         ChatMessageVO chatMessageVO = new ChatMessageVO();
         chatMessageVO.setType(type);
+        chatMessageVO.setToken(token);
         asyncMessageVO.setContent(gson.toJson(chatMessageVO));
         message.setContent(gson.toJson(asyncMessageVO)); // AsyncMessageVO toJson String
         String jsonMessageString = gson.toJson(message);
         async.send(jsonMessageString);
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

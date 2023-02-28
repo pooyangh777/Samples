@@ -1,5 +1,6 @@
 package WebSocket;
 
+import WebSocket.Input.AsyncMessageResponse;
 import com.google.gson.Gson;
 
 import javax.websocket.*;
@@ -53,7 +54,7 @@ public class Async {
                     }
                     break;
                 case Message:
-                    listener.onMessage(message);
+                    listener.onMessage(gson.fromJson(message, AsyncMessageResponse.class));
             }
         }
     }

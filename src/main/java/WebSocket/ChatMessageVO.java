@@ -1,7 +1,7 @@
 package WebSocket;
 
 public class ChatMessageVO {
-    private String token = "9a8811cc9cea4f53aaba9787ed2f0403.XzIwMjMy";
+    private String token;
     private int tokenIssuer = 1;
     private String uniqueId = "19F39376-26E5-412C-B8FD-024202AC833D";
     private int type;
