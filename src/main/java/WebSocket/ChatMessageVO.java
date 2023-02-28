@@ -1,10 +1,10 @@
 package WebSocket;
 
 public class ChatMessageVO {
-    private String token = "02accee904cb4026808debb43424369d.XzIwMjMy";
+    private String token = "9a8811cc9cea4f53aaba9787ed2f0403.XzIwMjMy";
     private int tokenIssuer = 1;
     private String uniqueId = "19F39376-26E5-412C-B8FD-024202AC833D";
-    private ChatMessageVOTypes type;
+    private int type;
     private String typeCode = "default";
 
     public void setToken(String token) {
@@ -23,7 +23,7 @@ public class ChatMessageVO {
         return uniqueId;
     }
 
-    public ChatMessageVOTypes getType() {
+    public int getType() {
         return type;
     }
 
@@ -32,6 +32,6 @@ public class ChatMessageVO {
     }
 
     public void setType(ChatMessageVOTypes type) {
-        this.type = type;
+        this.type = type.value;
     }
 }

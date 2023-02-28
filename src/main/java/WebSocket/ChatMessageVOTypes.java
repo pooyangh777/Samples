@@ -2,8 +2,8 @@ package WebSocket;
 
 public enum ChatMessageVOTypes {
     createThread(1),
-    message(2) ,
-    sent (3),
+    message(2),
+    sent(3),
     delivery(4),
     seen(5),
     ping(6),
@@ -89,9 +89,9 @@ public enum ChatMessageVOTypes {
     unarchiveThread(224),
     threadsUnreadCount(233),
 
-            // CALL
+    // CALL
     startCallRequest(70),
-    acceptCall(71) ,// never called from server events
+    acceptCall(71),// never called from server events
     cancelCall(72),
     deliveredCallRequest(73),
     callStarted(74),

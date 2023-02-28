@@ -44,7 +44,6 @@ public class Chat implements AsyncListener {
         chatMessageVO.setType(type);
         asyncMessageVO.setContent(gson.toJson(chatMessageVO));
         message.setContent(gson.toJson(asyncMessageVO)); // AsyncMessageVO toJson String
-
         String jsonMessageString = gson.toJson(message);
         async.send(jsonMessageString);
     }
