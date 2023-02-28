@@ -9,7 +9,7 @@ import java.nio.ByteBuffer;
 import java.util.Objects;
 
 @ClientEndpoint
-public class WebSocketClass {
+public class Async {
     URI url;
     WebSocketContainer container;
     Session session;
@@ -17,7 +17,7 @@ public class WebSocketClass {
     String deviceId;
     AsyncListener listener;
 
-    public WebSocketClass(URI url, AsyncListener listener) {
+    public Async(URI url, AsyncListener listener) {
         this.listener = listener;
         this.url = url;
         container = ContainerProvider.getWebSocketContainer();
@@ -35,9 +35,9 @@ public class WebSocketClass {
 
     @OnMessage
     public void onMessage(String message) {
-        System.out.println(message);
+        System.out.println("AsyncSDK:\n" + message);
         AsyncMessage response = gson.fromJson(message, AsyncMessage.class);
-        AsyncType type = AsyncType.check(response.getType());
+        AsyncType type = AsyncType            .check(response.getType());
         if (type != null) {
             switch (type) {
                 case Ping:
@@ -52,6 +52,8 @@ public class WebSocketClass {
                         listener.onSocketStateChanged(AsyncState.Ready);
                     }
                     break;
+                case Message:
+                    listener.onMessage(message);
             }
         }
     }
@@ -100,5 +102,4 @@ public class WebSocketClass {
         String content = getWrapperVo(AsyncType.ServerRegister, gson.toJson(serverRegister));
         send(content);
     }
-
 }
