@@ -4,6 +4,7 @@ import WebSocket.Input.AsyncMessageResponse;
 import com.google.gson.Gson;
 
 import javax.websocket.*;
+import javax.xml.bind.Unmarshaller;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.ByteBuffer;
@@ -55,6 +56,7 @@ public class Async {
                     break;
                 case Message:
                     listener.onMessage(gson.fromJson(message, AsyncMessageResponse.class));
+
             }
         }
     }

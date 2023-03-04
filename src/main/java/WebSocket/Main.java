@@ -10,7 +10,7 @@ public class Main {
                 //IDLE
             }
         });
-        chat.setToken("9edc5e4146fc45e189ce9d2ebc9f6ebd.XzIwMjMy");
+        chat.setToken("9cbe74f5abbd4a97b855fc4765600d21.XzIwMjMz");
         chat.connect();
         while (true) {
         }

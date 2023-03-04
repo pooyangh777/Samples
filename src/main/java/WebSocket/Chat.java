@@ -2,6 +2,8 @@ package WebSocket;
 
 import WebSocket.Input.AsyncMessageResponse;
 import WebSocket.Input.ChatMessageResponse;
+import WebSocket.Input.ResultThreads;
+import WebSocket.Input.Thread;
 import com.google.gson.Gson;
 
 import java.net.URI;
@@ -21,17 +23,22 @@ public class Chat implements AsyncListener {
     public void onSocketStateChanged(AsyncState state) {
         System.out.println("The state of async changed to " + state.toString());
         if (state == AsyncState.Ready) {
-           getUserInfo();
+//            getUserInfo();
+            getThreads();
         }
     }
 
     @Override
     public void onMessage(AsyncMessageResponse message) {
         //Message
-        ChatMessageResponse chatMessageResponse = gson.fromJson(message.getContent(), ChatMessageResponse.class);
-        if (chatMessageResponse.getType() == 23) {
+        ChatMessageResponse chatMessageResponseMessage = gson.fromJson(message.getContent(), ChatMessageResponse.class);
+        Thread thread = gson.fromJson(chatMessageResponseMessage.getContent(), Thread.class);
+        if (chatMessageResponseMessage.getType() == 23) {
             // Chat READY
             listener.onConnectionStateChanged(ChatState.Ready);
+        } else if (chatMessageResponseMessage.getType() == 14) {
+            System.out.println(thread.getId());
+            System.out.println(chatMessageResponseMessage.getType());
         }
     }
 
