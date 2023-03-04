@@ -6,6 +6,15 @@ public class ChatMessageVO {
     private String uniqueId = "19F39376-26E5-412C-B8FD-024202AC833D";
     private int type;
     private String typeCode = "default";
+    String content;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public void setToken(String token) {
         this.token = token;
