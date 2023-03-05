@@ -2,9 +2,7 @@ package WebSocket.Input;
 
 import WebSocket.ChatMessageVOTypes;
 
-import java.awt.*;
-
-public class HistoryModel {
+public class Message {
     public Boolean deletable;
     public Boolean delivered;
     public Boolean editable;
@@ -12,7 +10,7 @@ public class HistoryModel {
     public Integer id;
     public Boolean mentioned;
     public String message;
-    public ChatMessageVOTypes messageType;
+    public Integer messageType;
     public String metadata;
     public Integer ownerId;
     public Boolean pinned;
@@ -20,12 +18,12 @@ public class HistoryModel {
     public Boolean seen;
     public String systemMetadata;
     public Integer threadId;
-    public Integer time;
-    public Integer timeNanos;
+    public Long time;
+    public Long timeNanos;
     public String uniqueId;
     public Thread conversation;
     public Participant participant;
-    public Integer pinTime;
+    public Long pinTime;
     public Boolean pinNotifyAll;
 
     public Boolean getDeletable() {
@@ -84,11 +82,11 @@ public class HistoryModel {
         this.message = message;
     }
 
-    public ChatMessageVOTypes getMessageType() {
+    public Integer getMessageType() {
         return messageType;
     }
 
-    public void setMessageType(ChatMessageVOTypes messageType) {
+    public void setMessageType(Integer messageType) {
         this.messageType = messageType;
     }
 
@@ -148,19 +146,19 @@ public class HistoryModel {
         this.threadId = threadId;
     }
 
-    public Integer getTime() {
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(Integer time) {
+    public void setTime(Long time) {
         this.time = time;
     }
 
-    public Integer getTimeNanos() {
+    public Long getTimeNanos() {
         return timeNanos;
     }
 
-    public void setTimeNanos(Integer timeNanos) {
+    public void setTimeNanos(Long timeNanos) {
         this.timeNanos = timeNanos;
     }
 
@@ -188,11 +186,11 @@ public class HistoryModel {
         this.participant = participant;
     }
 
-    public Integer getPinTime() {
+    public Long getPinTime() {
         return pinTime;
     }
 
-    public void setPinTime(Integer pinTime) {
+    public void setPinTime(Long pinTime) {
         this.pinTime = pinTime;
     }
 
@@ -203,4 +201,33 @@ public class HistoryModel {
     public void setPinNotifyAll(Boolean pinNotifyAll) {
         this.pinNotifyAll = pinNotifyAll;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "deletable=" + deletable +
+                ", delivered=" + delivered +
+                ", editable=" + editable +
+                ", edited=" + edited +
+                ", id=" + id +
+                ", mentioned=" + mentioned +
+                ", message='" + message + '\'' +
+                ", messageType=" + messageType +
+                ", metadata='" + metadata + '\'' +
+                ", ownerId=" + ownerId +
+                ", pinned=" + pinned +
+                ", previousId=" + previousId +
+                ", seen=" + seen +
+                ", systemMetadata='" + systemMetadata + '\'' +
+                ", threadId=" + threadId +
+                ", time=" + time +
+                ", timeNanos=" + timeNanos +
+                ", uniqueId='" + uniqueId + '\'' +
+                ", conversation=" + conversation +
+                ", participant=" + participant +
+                ", pinTime=" + pinTime +
+                ", pinNotifyAll=" + pinNotifyAll +
+                '}';
+    }
+
 }

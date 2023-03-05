@@ -1,127 +1,119 @@
 package WebSocket;
 
-public enum ChatMessageVOTypes {
-    createThread(1),
-    message(2),
-    sent(3),
-    delivery(4),
-    seen(5),
-    ping(6),
-    block(7),
-    unblock(8),
-    leaveThread(9),
-    rename(10), // not implemented yet!
-    addParticipant(11),
-    getStatus(12), // not implemented yet!
-    getContacts(13),
-    getThreads(14),
-    getHistory(15),
-    changeType(16), // not implemented yet!
-    removedFromThread(17),
-    removeParticipant(18),
-    muteThread(19),
-    unmuteThread(20),
-    updateThreadInfo(21),
-    forwardMessage(22),
-    userInfo(23),
-    userStatus(24),// not implemented yet!
-    getBlocked(25),
-    relationInfo(26), // not implemented yet!
-    threadParticipants(27),
-    editMessage(28),
-    deleteMessage(29),
-    lastMessageSeenUpdated(31),
-    messageDeliveredToParticipants(32),
-    getMessageSeenParticipants(33),
-    isNameAvailable(34),
-    joinThread(39),
-    botMessage(40),
-    spamPvThread(41),
-    setRuleToUser(42),
-    removeRoleFromUser(43),
-    clearHistory(44),
-    systemMessage(46),
-    getNotSeenDuration(47),
-    pinThread(48),
-    unpinThread(49),
-    pinMessage(50),
-    unpinMessage(51),
-    setProfile(52),
-    changeThreadType(53),
-    getCurrentUserRoles(54),
-    getReportReasons(56), // not implemented yet!,
-    reportThread(57),
-    reportUser(58),
-    reportMessage(59),
-    contactsLastSeen(60),
-    allUnreadMessageCount(61),
-    createBot(62),
-    defineBotCommand(63),
-    startBot(64),
-    stopBot(65),
-    lastMessageDeleted(66),
-    lastMessageEdited(67),
-    contactSynced(90),
-    logout(100),
-    statusPing(101),
-    closeThread(102),
-    removeBotCommands(104),
-    registerAssistant(107),
-    deacticveAssistant(108),
-    getAssistants(109),
-    getAssistantHistory(115),
-    blockAssistant(116),
-    unblockAssistant(117),
-    blockedAssistnts(118),
-    getUserBots(120),
-    mutualGroups(130),
-    deleteThread(151),
-    createTag(140),
-    editTag(141),
-    deleteTag(142),
-    addTagParticipants(143),
-    removeTagParticipants(144),
-    tagList(145),
-    getTagParticipants(-4),
-    exportChats(152),
-    threadContactNameUpdated(220),
-    archiveThread(223),
-    unarchiveThread(224),
-    threadsUnreadCount(233),
-
-    // CALL
-    startCallRequest(70),
-    acceptCall(71),// never called from server events
-    cancelCall(72),
-    deliveredCallRequest(73),
-    callStarted(74),
-    endCallRequest(75),
-    endCall(76),
-    getCalls(77),
-    groupCallRequest(91),
-    leaveCall(92),
-    addCallParticipant(93),
-    callParticipantJoined(94),
-    removeCallParticipant(95),
-    terminateCall(96), // never called from server events
-    muteCallParticipant(97),
-    unmuteCallParticipant(98),
-    cancelGroupCall(99),
-    activeCallParticipants(110),
-    callSessionCreated(111),
-    turnOnVideoCall(113),
-    turnOffVideoCall(114),
-    startRecording(121),
-    stopRecording(122),
-    getCallsToJoin(129),
-    callClientErrors(153),
-    callStickerSystemMessage(225),
-    renewCallRequest(227),
-    callInquiry(228),
-    error(999);
-    final int value;
-
-    ChatMessageVOTypes(int value) {
-        this.value = value;
-    }
+public class ChatMessageVOTypes {
+   static final int createThread = 1;
+   static final int message = 2;
+   static final int sent = 3;
+   static final int delivery = 4;
+   static final int seen = 5;
+   static final int ping = 6;
+   static final int block = 7;
+   static final int unblock = 8;
+   static final int leaveThread = 9;
+   static final int rename = 10; // not implemented yet!
+   static final int addParticipant = 11;
+   static final int getStatus = 12; // not implemented yet!
+   static final int getContacts = 13;
+   static final int getThreads = 14;
+   static final int getHistory = 15;
+   static final int changeType = 16; // not implemented yet!
+   static final int removedFromThread = 17;
+   static final int removeParticipant = 18;
+   static final int muteThread = 19;
+   static final int unmuteThread = 20;
+   static final int updateThreadInfo = 21;
+   static final int forwardMessage = 22;
+   static final int userInfo = 23;
+   static final int userStatus = 24;// not implemented yet!
+   static final int getBlocked = 25;
+   static final int relationInfo = 26; // not implemented yet!
+   static final int threadParticipants = 27;
+   static final int editMessage = 28;
+   static final int deleteMessage = 29;
+   static final int lastMessageSeenUpdated = 31;
+   static final int messageDeliveredToParticipants = 32;
+   static final int getMessageSeenParticipants = 33;
+   static final int isNameAvailable = 34;
+   static final int joinThread = 39;
+   static final int botMessage = 40;
+   static final int spamPvThread = 41;
+   static final int setRuleToUser = 42;
+   static final int removeRoleFromUser = 43;
+   static final int clearHistory = 44;
+   static final int systemMessage = 46;
+   static final int getNotSeenDuration = 47;
+   static final int pinThread = 48;
+   static final int unpinThread = 49;
+   static final int pinMessage = 50;
+   static final int unpinMessage = 51;
+   static final int setProfile = 52;
+   static final int changeThreadType = 53;
+   static final int getCurrentUserRoles = 54;
+   static final int getReportReasons = 56; // not implemented yet!,
+   static final int reportThread = 57;
+   static final int reportUser = 58;
+   static final int reportMessage = 59;
+   static final int contactsLastSeen = 60;
+   static final int allUnreadMessageCount = 61;
+   static final int createBot = 62;
+   static final int defineBotCommand = 63;
+   static final int startBot = 64;
+   static final int stopBot = 65;
+   static final int lastMessageDeleted = 66;
+   static final int lastMessageEdited = 67;
+   static final int contactSynced = 90;
+   static final int logout = 100;
+   static final int statusPing = 101;
+   static final int closeThread = 102;
+   static final int removeBotCommands = 104;
+   static final int registerAssistant = 107;
+   static final int deacticveAssistant = 108;
+   static final int getAssistants = 109;
+   static final int getAssistantHistory = 115;
+   static final int blockAssistant = 116;
+   static final int unblockAssistant = 117;
+   static final int blockedAssistnts = 118;
+   static final int getUserBots = 120;
+   static final int mutualGroups = 130;
+   static final int deleteThread = 151;
+   static final int createTag = 140;
+   static final int editTag = 141;
+   static final int deleteTag = 142;
+   static final int addTagParticipants = 143;
+   static final int removeTagParticipants = 144;
+   static final int tagList = 145;
+   static final int getTagParticipants = -4;
+   static final int exportChats = 152;
+   static final int threadContactNameUpdated = 220;
+   static final int archiveThread = 223;
+   static final int unarchiveThread = 224;
+   static final int threadsUnreadCount = 233;
+   static final int acceptCall = 71;// never called from server events
+   static final int cancelCall = 72;
+   static final int deliveredCallRequest = 73;
+   static final int callStarted = 74;
+   static final int endCallRequest = 75;
+   static final int endCall = 76;
+   static final int getCalls = 77;
+   static final int groupCallRequest = 91;
+   static final int leaveCall = 92;
+   static final int addCallParticipant = 93;
+   static final int callParticipantJoined = 94;
+   static final int removeCallParticipant = 95;
+   static final int terminateCall = 96; // never called from server events
+   static final int muteCallParticipant = 97;
+   static final int unmuteCallParticipant = 98;
+   static final int cancelGroupCall = 99;
+   static final int activeCallParticipants = 110;
+   static final int callSessionCreated = 111;
+   static final int turnOnVideoCall = 113;
+   static final int turnOffVideoCall = 114;
+   static final int startRecording = 121;
+   static final int stopRecording = 122;
+   static final int getCallsToJoin = 129;
+   static final int callClientErrors = 153;
+   static final int callStickerSystemMessage = 225;
+   static final int renewCallRequest = 227;
+   static final int callInquiry = 228;
+   static final int error = 999;
 }

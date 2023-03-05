@@ -2,11 +2,15 @@ package WebSocket;
 
 import WebSocket.Input.*;
 import WebSocket.Input.Thread;
+import WebSocket.output.GetHistoryRequest;
+import WebSocket.output.SendTextMessageRequest;
 import com.google.gson.Gson;
 
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
+
+import static WebSocket.ChatMessageVOTypes.*;
 
 public class Chat implements AsyncListener {
     private final ChatListener listener;
@@ -31,15 +35,17 @@ public class Chat implements AsyncListener {
     public void onMessage(AsyncMessageResponse message) {
         //Message
         ChatMessageResponse chatMessageResponseMessage = gson.fromJson(message.getContent(), ChatMessageResponse.class);
-        if (chatMessageResponseMessage.getType() == 23) {
-            // Chat READY
-            listener.onConnectionStateChanged(ChatState.Ready);
-        } else if (chatMessageResponseMessage.getType() == 14) {
-            Thread[] threads = gson.fromJson(chatMessageResponseMessage.getContent(), Thread[].class);
-            List<Thread> threadList = Arrays.asList(threads);
-            listener.MessageGetThread(threadList);
-        } else if (chatMessageResponseMessage.getType() == 15) {
-            HistoryModel historyModel=gson.fromJson(chatMessageResponseMessage.getContent(), HistoryModel.class);
+        int type = chatMessageResponseMessage.getType();
+        switch (type) {
+            case userInfo:
+                onGetUserInfo(message, chatMessageResponseMessage);
+                break;
+            case getThreads:
+                onGetThreads(message, chatMessageResponseMessage);
+                break;
+            case getHistory:
+                onGetHistory(message, chatMessageResponseMessage);
+                break;
         }
     }
 
@@ -48,28 +54,28 @@ public class Chat implements AsyncListener {
     }
 
     public void sendMessageThread(SendTextMessageRequest request) {
-        sendMessage(ChatMessageVOTypes.message, gson.toJson(request));
+        sendMessage(ChatMessageVOTypes.message, gson.toJson(request), null);
     }
 
     public void getUserInfo() {
-        sendMessage(ChatMessageVOTypes.userInfo, null);
+        sendMessage(userInfo, null, null);
     }
-    public void getHistory()
-    {
-        sendMessage(ChatMessageVOTypes.getHistory,null);
-    }
-
-    public void getThreads(GetThreadRequest getThreadRequest) {
-        sendMessage(ChatMessageVOTypes.getThreads, gson.toJson(getThreadRequest));
+    public void getHistory(GetHistoryRequest request, Long subjectId) {
+        sendMessage(getHistory,gson.toJson(request), subjectId);
     }
 
-    public void sendMessage(ChatMessageVOTypes type, String content) {
+    public void getThreads(GetThreadRequest request) {
+        sendMessage(getThreads, gson.toJson(request), null);
+    }
+
+    public void sendMessage(int type, String content, Long subjectId) {
         Message message = new Message();
         AsyncMessageVO asyncMessageVO = new AsyncMessageVO();
         ChatMessageVO chatMessageVO = new ChatMessageVO();
+        chatMessageVO.setSubjectId(subjectId);
         chatMessageVO.setType(type);
         chatMessageVO.setToken(token);
-        chatMessageVO.setContent(gson.toJson(content));
+        chatMessageVO.setContent(content);
         asyncMessageVO.setContent(gson.toJson(chatMessageVO));
         message.setContent(gson.toJson(asyncMessageVO)); // AsyncMessageVO toJson String
         String jsonMessage = gson.toJson(message);
@@ -82,5 +88,20 @@ public class Chat implements AsyncListener {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    private void onGetThreads(AsyncMessageResponse message, ChatMessageResponse chatMessageResponseMessage) {
+        Thread[] threads = gson.fromJson(chatMessageResponseMessage.getContent(), Thread[].class);
+        List<Thread> threadList = Arrays.asList(threads);
+        listener.onGetThreads(threadList);
+    }
+
+    private void onGetHistory(AsyncMessageResponse message, ChatMessageResponse chatMessageResponseMessage) {
+        WebSocket.Input.Message[] messages = gson.fromJson(chatMessageResponseMessage.getContent(), WebSocket.Input.Message[].class);
+        listener.onGetHistory(Arrays.asList(messages));
+    }
+
+    private void onGetUserInfo(AsyncMessageResponse message, ChatMessageResponse chatMessageResponseMessage) {
+        listener.onConnectionStateChanged(ChatState.Ready);
     }
 }

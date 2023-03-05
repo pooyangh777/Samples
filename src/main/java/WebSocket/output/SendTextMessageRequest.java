@@ -1,4 +1,4 @@
-package WebSocket.Input;
+package WebSocket.output;
 
 public class SendTextMessageRequest {
     String message;
