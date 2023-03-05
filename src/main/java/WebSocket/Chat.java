@@ -1,7 +1,6 @@
 package WebSocket;
 
-import WebSocket.Input.AsyncMessageResponse;
-import WebSocket.Input.ChatMessageResponse;
+import WebSocket.Input.*;
 import WebSocket.Input.Thread;
 import com.google.gson.Gson;
 
@@ -38,8 +37,9 @@ public class Chat implements AsyncListener {
         } else if (chatMessageResponseMessage.getType() == 14) {
             Thread[] threads = gson.fromJson(chatMessageResponseMessage.getContent(), Thread[].class);
             List<Thread> threadList = Arrays.asList(threads);
-            listener.sendMessageToClient(threadList);
-
+            listener.MessageGetThread(threadList);
+        } else if (chatMessageResponseMessage.getType() == 15) {
+            HistoryModel historyModel=gson.fromJson(chatMessageResponseMessage.getContent(), HistoryModel.class);
         }
     }
 
@@ -47,33 +47,37 @@ public class Chat implements AsyncListener {
         async.connect();
     }
 
+    public void sendMessageThread(SendTextMessageRequest request) {
+        sendMessage(ChatMessageVOTypes.message, gson.toJson(request));
+    }
+
     public void getUserInfo() {
-        send(ChatMessageVOTypes.userInfo);
+        sendMessage(ChatMessageVOTypes.userInfo, null);
+    }
+    public void getHistory()
+    {
+        sendMessage(ChatMessageVOTypes.getHistory,null);
     }
 
     public void getThreads(GetThreadRequest getThreadRequest) {
-        Message message = new Message();
-        AsyncMessageVO asyncMessageVO = new AsyncMessageVO();
-        ChatMessageVO chatMessageVO = new ChatMessageVO();
-        chatMessageVO.setType(ChatMessageVOTypes.getThreads);
-        chatMessageVO.setToken(token);
-        chatMessageVO.setContent(gson.toJson(getThreadRequest));
-        asyncMessageVO.setContent(gson.toJson(chatMessageVO));
-        message.setContent(gson.toJson(asyncMessageVO)); // AsyncMessageVO toJson String
-        String jsonMessageString = gson.toJson(message);
-        async.send(jsonMessageString);
+        sendMessage(ChatMessageVOTypes.getThreads, gson.toJson(getThreadRequest));
     }
 
-    public void send(ChatMessageVOTypes type) {
+    public void sendMessage(ChatMessageVOTypes type, String content) {
         Message message = new Message();
         AsyncMessageVO asyncMessageVO = new AsyncMessageVO();
         ChatMessageVO chatMessageVO = new ChatMessageVO();
         chatMessageVO.setType(type);
         chatMessageVO.setToken(token);
+        chatMessageVO.setContent(gson.toJson(content));
         asyncMessageVO.setContent(gson.toJson(chatMessageVO));
         message.setContent(gson.toJson(asyncMessageVO)); // AsyncMessageVO toJson String
-        String jsonMessageString = gson.toJson(message);
-        async.send(jsonMessageString);
+        String jsonMessage = gson.toJson(message);
+        send(jsonMessage);
+    }
+
+    public void send(String message) {
+        async.send(message);
     }
 
     public void setToken(String token) {

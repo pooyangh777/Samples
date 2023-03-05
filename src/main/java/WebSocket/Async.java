@@ -39,7 +39,7 @@ public class Async {
     public void onMessage(String message) {
         System.out.println("AsyncSDK:\n" + message);
         AsyncMessage response = gson.fromJson(message, AsyncMessage.class);
-        AsyncType type = AsyncType            .check(response.getType());
+        AsyncType type = AsyncType.check(response.getType());
         if (type != null) {
             switch (type) {
                 case Ping:
