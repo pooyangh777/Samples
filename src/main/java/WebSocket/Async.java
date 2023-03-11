@@ -4,6 +4,7 @@ import WebSocket.Input.AsyncMessageResponse;
 import com.google.gson.Gson;
 
 import javax.websocket.*;
+import javax.xml.bind.Unmarshaller;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.ByteBuffer;
@@ -38,7 +39,7 @@ public class Async {
     public void onMessage(String message) {
         System.out.println("AsyncSDK:\n" + message);
         AsyncMessage response = gson.fromJson(message, AsyncMessage.class);
-        AsyncType type = AsyncType            .check(response.getType());
+        AsyncType type = AsyncType.check(response.getType());
         if (type != null) {
             switch (type) {
                 case Ping:
@@ -55,6 +56,7 @@ public class Async {
                     break;
                 case Message:
                     listener.onMessage(gson.fromJson(message, AsyncMessageResponse.class));
+
             }
         }
     }
